@@ -1,0 +1,42 @@
+{% comment %} templates/index.json {% endcomment %}
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "story": {
+      "type": "story",
+      "settings": {}
+    },
+    "categories": {
+      "type": "categories",
+      "blocks": {
+        "cat1": { "type": "category", "settings": { "title": "Sacs à Main",   "fallback_color": "#8B6B4A" } },
+        "cat2": { "type": "category", "settings": { "title": "Mini Bags",     "fallback_color": "#2A2018" } },
+        "cat3": { "type": "category", "settings": { "title": "Tote Bags",     "fallback_color": "#C8A882" } },
+        "cat4": { "type": "category", "settings": { "title": "Clutch Soirée", "fallback_color": "#4A3828" } },
+        "cat5": { "type": "category", "settings": { "title": "Accessoires",   "fallback_color": "#D4B896" } }
+      },
+      "block_order": ["cat1","cat2","cat3","cat4","cat5"]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "name": "Sara El Amrani",  "location": "Cliente VIP · Casablanca",  "text": "Un sac absolument magnifique. La qualité est exceptionnelle. Je reçois des compliments à chaque fois que je le porte." } },
+        "t2": { "type": "testimonial", "settings": { "name": "Leila Benali",    "location": "Cliente Fidèle · Rabat",    "text": "SACJOUZIF c'est la référence. La livraison était rapide et le packaging soigné. Je recommande vivement !" } },
+        "t3": { "type": "testimonial", "settings": { "name": "Nadia Cherkaoui", "location": "Influenceuse · Marrakech", "text": "Le sac camel est mon coup de cœur. La finition est parfaite et les détails dorés sont sublimes. Un vrai bijou !" } }
+      },
+      "block_order": ["t1","t2","t3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": ["hero","featured_products","story","categories","testimonials","newsletter"]
+}

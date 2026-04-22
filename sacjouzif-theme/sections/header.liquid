@@ -1,0 +1,62 @@
+{% comment %} sections/header.liquid {% endcomment %}
+
+<header class="site-header" role="banner">
+  <div class="header-logo">
+    <a href="{{ routes.root_url }}">
+      {{ shop.name | split: '' | first }}
+      {%- assign rest = shop.name | slice: 1, 100 -%}
+      <span>{{ rest }}</span>
+    </a>
+  </div>
+
+  <nav aria-label="Navigation principale">
+    <ul class="header-nav">
+      {% for link in linklists.main-menu.links %}
+        <li>
+          <a href="{{ link.url }}"
+             {% if link.active %}class="active"{% endif %}>
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="header-actions">
+    {% if shop.customer_accounts_enabled %}
+      <a href="{{ routes.account_url }}" aria-label="Mon compte" style="color:var(--text-mid); text-decoration:none; font-size:11px; letter-spacing:0.15em; text-transform:uppercase;">
+        Compte
+      </a>
+    {% endif %}
+
+    <button class="btn-cart" id="cartToggle" aria-label="Ouvrir le panier">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      Panier
+      <span class="cart-count">{{ cart.item_count }}</span>
+    </button>
+
+    <button class="btn-menu" id="menuToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+  {% for link in linklists.main-menu.links %}
+    <a href="{{ link.url }}">{{ link.title }}</a>
+  {% endfor %}
+  {% if shop.customer_accounts_enabled %}
+    <a href="{{ routes.account_url }}">Mon Compte</a>
+  {% endif %}
+</nav>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "settings": []
+}
+{% endschema %}

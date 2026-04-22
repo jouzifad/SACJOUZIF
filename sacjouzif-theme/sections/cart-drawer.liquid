@@ -1,0 +1,63 @@
+{% comment %} sections/cart-drawer.liquid {% endcomment %}
+
+<div class="cart-drawer-overlay" id="cartOverlay"></div>
+
+<div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Votre panier">
+  <div class="cart-drawer-header">
+    <h2>Votre Panier</h2>
+    <button class="cart-close" id="cartClose" aria-label="Fermer">×</button>
+  </div>
+
+  <div class="cart-drawer-items" id="cartItems">
+    {% if cart.item_count == 0 %}
+      <div class="cart-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <p>Votre panier est vide</p>
+      </div>
+    {% else %}
+      {% for item in cart.items %}
+        <div class="cart-item" data-key="{{ item.key }}">
+          <div class="cart-item-img">
+            {% if item.image %}
+              <img src="{{ item.image | img_url: '160x180', crop: 'center' }}" alt="{{ item.title | escape }}">
+            {% endif %}
+          </div>
+          <div class="cart-item-info">
+            <h4>{{ item.product.title }}</h4>
+            {% unless item.variant.title == 'Default Title' %}
+              <p style="font-size:12px;color:var(--text-mid);margin-bottom:6px;">{{ item.variant.title }}</p>
+            {% endunless %}
+            <div class="cart-item-price">{{ item.final_price | money }}</div>
+            <div class="cart-item-qty">
+              <button class="qty-btn" data-action="dec" data-key="{{ item.key }}" aria-label="Diminuer">−</button>
+              <span class="qty-num">{{ item.quantity }}</span>
+              <button class="qty-btn" data-action="inc" data-key="{{ item.key }}" aria-label="Augmenter">+</button>
+            </div>
+          </div>
+          <button class="cart-item-remove" data-key="{{ item.key }}" aria-label="Supprimer">×</button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="cart-drawer-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">{{ cart.total_price | money }}</span>
+    </div>
+    <a href="{{ routes.checkout_url }}" class="btn-checkout">
+      <span>Commander Maintenant</span>
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Panier",
+  "settings": []
+}
+{% endschema %}

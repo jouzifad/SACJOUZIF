@@ -1,0 +1,26 @@
+{
+  "general": {
+    "meta": { "tags": "Tagged \"%{tags}\"", "page": "Page %{page}" }
+  },
+  "newsletter": {
+    "label": "Email",
+    "placeholder": "Votre adresse email...",
+    "button": "S'inscrire",
+    "success": "✓ Vous êtes inscrit(e) !"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au Panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "onboarding_title": "Sac Luxe",
+      "onboarding_collection_title": "Collection"
+    }
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "checkout": "Commander Maintenant",
+    "empty": "Votre panier est vide",
+    "count": { "one": "%{count} article", "other": "%{count} articles" }
+  }
+}

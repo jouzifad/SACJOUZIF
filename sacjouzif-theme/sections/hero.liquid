@@ -1,0 +1,73 @@
+{% comment %} sections/hero.liquid {% endcomment %}
+
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+
+  <div class="hero-geo hero-geo-1"></div>
+  <div class="hero-geo hero-geo-2"></div>
+  <div class="hero-geo hero-geo-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">{{ section.settings.tag_text }}</div>
+
+    <h1 class="hero-title">
+      <span class="hero-title-line">{{ section.settings.title_line1 }}</span>
+      <span class="hero-title-line">{{ section.settings.title_line2 }}</span>
+      <span class="hero-title-line">{{ section.settings.title_line3 }}</span>
+    </h1>
+
+    <p class="hero-sub">{{ section.settings.subtitle }}</p>
+
+    <div class="hero-actions">
+      <a href="{{ section.settings.cta_primary_url }}" class="btn-primary">
+        <span>{{ section.settings.cta_primary_label }}</span>
+      </a>
+      <a href="{{ section.settings.cta_secondary_url }}" class="btn-ghost">
+        {{ section.settings.cta_secondary_label }}
+      </a>
+    </div>
+  </div>
+
+  {% if section.settings.hero_image %}
+    <div class="hero-image">
+      <img src="{{ section.settings.hero_image | img_url: '900x1200', crop: 'center' }}"
+           alt="{{ section.settings.hero_image.alt | escape }}"
+           loading="eager">
+      <div class="hero-image-overlay"></div>
+    </div>
+  {% endif %}
+</section>
+
+<!-- Marquee -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    {% assign items = section.settings.marquee_text | split: ',' %}
+    {% for item in items %}
+      <span>{{ item | strip }}</span><span class="dot">✦</span>
+    {% endfor %}
+    {% for item in items %}
+      <span>{{ item | strip }}</span><span class="dot">✦</span>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text",    "id": "tag_text",            "label": "Tag line",             "default": "Nouvelle Collection 2025" },
+    { "type": "text",    "id": "title_line1",          "label": "Titre ligne 1",        "default": "SAC" },
+    { "type": "text",    "id": "title_line2",          "label": "Titre ligne 2 (or)",   "default": "Jouzif" },
+    { "type": "text",    "id": "title_line3",          "label": "Titre ligne 3",        "default": "LUXE" },
+    { "type": "textarea","id": "subtitle",             "label": "Sous-titre",           "default": "L'élégance féminine à son état pur. Chaque sac, une œuvre d'art." },
+    { "type": "text",    "id": "cta_primary_label",   "label": "Bouton principal",     "default": "Découvrir la Collection" },
+    { "type": "url",     "id": "cta_primary_url",     "label": "Lien bouton principal","default": "/collections/all" },
+    { "type": "text",    "id": "cta_secondary_label", "label": "Bouton secondaire",    "default": "Notre Histoire" },
+    { "type": "url",     "id": "cta_secondary_url",   "label": "Lien bouton secondaire","default": "/pages/about" },
+    { "type": "image_picker", "id": "hero_image",     "label": "Image hero (droite)" },
+    { "type": "textarea","id": "marquee_text",         "label": "Texte défilant (séparé par virgules)", "default": "SACJOUZIF, Maroquinerie de Luxe, Sacs Femme, Collection 2025, Élégance & Raffinement, Qualité Premium" }
+  ],
+  "presets": [{ "name": "Hero Principal" }]
+}
+{% endschema %}

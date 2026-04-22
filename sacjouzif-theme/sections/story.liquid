@@ -1,0 +1,65 @@
+{% comment %} sections/story.liquid {% endcomment %}
+
+<section class="section section--dark" id="story">
+  <div class="story-grid">
+    <div>
+      <div class="section-label reveal">{{ section.settings.label }}</div>
+      <h2 class="section-title reveal reveal--d1">{{ section.settings.title }}</h2>
+      <p class="section-desc reveal reveal--d1">{{ section.settings.text1 }}</p>
+      {% if section.settings.text2 != blank %}
+        <p class="section-desc reveal reveal--d2" style="margin-top:14px;">{{ section.settings.text2 }}</p>
+      {% endif %}
+
+      <div class="story-stats">
+        <div class="stat reveal reveal--d1">
+          <div class="stat-num">{{ section.settings.stat1_num }}</div>
+          <div class="stat-label">{{ section.settings.stat1_label }}</div>
+        </div>
+        <div class="stat reveal reveal--d2">
+          <div class="stat-num">{{ section.settings.stat2_num }}</div>
+          <div class="stat-label">{{ section.settings.stat2_label }}</div>
+        </div>
+        <div class="stat reveal reveal--d3">
+          <div class="stat-num">{{ section.settings.stat3_num }}</div>
+          <div class="stat-label">{{ section.settings.stat3_label }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-visual reveal reveal--d2">
+      <div class="story-frame story-frame-1"></div>
+      <div class="story-frame story-frame-2"></div>
+      <div class="story-inner">
+        {% if section.settings.story_image %}
+          <img src="{{ section.settings.story_image | img_url: '600x700', crop: 'center' }}"
+               alt="{{ section.settings.story_image.alt | escape }}"
+               loading="lazy">
+        {% else %}
+          <div class="story-inner-placeholder">
+            <div class="story-bg-text">SAC</div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Notre Histoire",
+  "settings": [
+    { "type": "text",        "id": "label",       "label": "Label",        "default": "Notre Histoire" },
+    { "type": "text",        "id": "title",       "label": "Titre",        "default": "L'Art de la <em>Maroquinerie</em> Féminine" },
+    { "type": "textarea",    "id": "text1",       "label": "Paragraphe 1", "default": "SACJOUZIF est née d'une passion pour l'artisanat authentique et le design intemporel." },
+    { "type": "textarea",    "id": "text2",       "label": "Paragraphe 2 (optionnel)" },
+    { "type": "image_picker","id": "story_image", "label": "Image" },
+    { "type": "text", "id": "stat1_num",   "label": "Stat 1 — Nombre", "default": "500+" },
+    { "type": "text", "id": "stat1_label", "label": "Stat 1 — Label",  "default": "Clientes Satisfaites" },
+    { "type": "text", "id": "stat2_num",   "label": "Stat 2 — Nombre", "default": "80+" },
+    { "type": "text", "id": "stat2_label", "label": "Stat 2 — Label",  "default": "Modèles Exclusifs" },
+    { "type": "text", "id": "stat3_num",   "label": "Stat 3 — Nombre", "default": "3" },
+    { "type": "text", "id": "stat3_label", "label": "Stat 3 — Label",  "default": "Ans d'Excellence" }
+  ],
+  "presets": [{ "name": "Notre Histoire" }]
+}
+{% endschema %}

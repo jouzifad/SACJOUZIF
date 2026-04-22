@@ -1,0 +1,44 @@
+{% comment %} sections/newsletter.liquid {% endcomment %}
+
+<section class="section--newsletter" id="newsletter">
+  <div class="nl-ring nl-ring-1"></div>
+  <div class="nl-ring nl-ring-2"></div>
+
+  <div class="section-label reveal">{{ section.settings.label }}</div>
+  <h2 class="section-title reveal reveal--d1">{{ section.settings.title }}</h2>
+  <p class="reveal reveal--d2">{{ section.settings.subtitle }}</p>
+
+  {% form 'customer', class: 'nl-form reveal reveal--d3' %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <input
+      type="email"
+      name="contact[email]"
+      class="nl-input"
+      placeholder="{{ section.settings.placeholder | default: 'Votre adresse email...' }}"
+      required
+      autocomplete="email">
+    <button type="submit" class="nl-btn">
+      {{ section.settings.button_label | default: "S'inscrire" }}
+    </button>
+  {% endform %}
+
+  {% if customer %}
+    <p style="color:var(--gold);font-size:13px;margin-top:20px;position:relative;z-index:1;">
+      {{ 'newsletter.success' | t | default: '✓ Vous êtes inscrit(e) !' }}
+    </p>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text",     "id": "label",        "label": "Label",       "default": "Restez Connectée" },
+    { "type": "text",     "id": "title",        "label": "Titre",       "default": "Rejoignez le Cercle <em>SACJOUZIF</em>" },
+    { "type": "textarea", "id": "subtitle",     "label": "Sous-titre",  "default": "Recevez en avant-première nos nouvelles collections, offres exclusives et conseils style." },
+    { "type": "text",     "id": "placeholder",  "label": "Placeholder", "default": "Votre adresse email..." },
+    { "type": "text",     "id": "button_label", "label": "Bouton",      "default": "S'inscrire" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

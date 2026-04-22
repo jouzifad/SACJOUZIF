@@ -1,0 +1,49 @@
+{% comment %} sections/featured-products.liquid {% endcomment %}
+
+<section class="section" id="featured">
+  <div class="featured-header">
+    <div class="reveal">
+      <div class="section-label">{{ section.settings.label }}</div>
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+    <p class="section-desc reveal reveal--d1">{{ section.settings.description }}</p>
+  </div>
+
+  <div class="products-grid">
+    {% assign collection = collections[section.settings.collection] %}
+    {% if collection != blank %}
+      {% for product in collection.products limit: section.settings.products_count %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    {% else %}
+      {% comment %} Fallback: show onboarding placeholders {% endcomment %}
+      {% for i in (1..6) %}
+        {% render 'product-card-placeholder', index: i %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if section.settings.show_all_link %}
+    <div style="text-align:center; margin-top:52px;">
+      <a href="{{ section.settings.all_link | default: '/collections/all' }}" class="btn-ghost">
+        Voir toute la collection
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Produits Phares",
+  "settings": [
+    { "type": "text",       "id": "label",          "label": "Label section",       "default": "Produits Phares" },
+    { "type": "text",       "id": "title",          "label": "Titre section",       "default": "Notre <em>Collection</em> Signature" },
+    { "type": "textarea",   "id": "description",    "label": "Description",         "default": "Des créations exclusives alliant savoir-faire artisanal et design contemporain." },
+    { "type": "collection", "id": "collection",     "label": "Collection à afficher" },
+    { "type": "range",      "id": "products_count", "label": "Nombre de produits",  "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "checkbox",   "id": "show_all_link",  "label": "Afficher lien 'Voir tout'", "default": true },
+    { "type": "url",        "id": "all_link",       "label": "Lien 'Voir tout'" }
+  ],
+  "presets": [{ "name": "Produits Phares" }]
+}
+{% endschema %}

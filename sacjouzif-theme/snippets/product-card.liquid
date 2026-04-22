@@ -1,0 +1,50 @@
+{% comment %} snippets/product-card.liquid {% endcomment %}
+{% comment %} Usage: {% render 'product-card', product: product %} {% endcomment %}
+
+<div class="product-card">
+  {% if product.compare_at_price > product.price %}
+    <div class="product-badge product-badge--sale">Promo</div>
+  {% elsif product.tags contains 'new' or product.tags contains 'nouveau' %}
+    <div class="product-badge">Nouveau</div>
+  {% elsif product.tags contains 'bestseller' %}
+    <div class="product-badge">Bestseller</div>
+  {% endif %}
+
+  <div class="product-media">
+    {% if product.featured_image %}
+      <img
+        src="{{ product.featured_image | img_url: '600x800', crop: 'center' }}"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        loading="lazy"
+        width="600" height="800">
+    {% else %}
+      <div class="product-placeholder bag-art-{{ forloop.index | modulo: 5 | plus: 1 }}">
+        <svg style="width:45%;height:45%;opacity:0.3;" viewBox="0 0 160 200" fill="none">
+          <path d="M45 65C45 48 62 35 80 35C98 35 115 48 115 65" stroke="rgba(250,246,240,0.7)" stroke-width="3" fill="none"/>
+          <rect x="20" y="65" width="120" height="110" rx="6" stroke="rgba(250,246,240,0.7)" stroke-width="3" fill="none"/>
+          <circle cx="80" cy="125" r="7" stroke="rgba(201,169,110,0.9)" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+    {% endif %}
+
+    <div class="product-overlay">
+      <button
+        class="product-atc"
+        data-product-id="{{ product.id }}"
+        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+        aria-label="Ajouter {{ product.title | escape }} au panier">
+        Ajouter au Panier
+      </button>
+    </div>
+  </div>
+
+  <div class="product-body">
+    <a href="{{ product.url }}" class="product-title">{{ product.title }}</a>
+    <div class="product-price">
+      {% if product.compare_at_price > product.price %}
+        <s>{{ product.compare_at_price | money }}</s>
+      {% endif %}
+      {{ product.price | money }}
+    </div>
+  </div>
+</div>

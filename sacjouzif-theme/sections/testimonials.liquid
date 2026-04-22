@@ -1,0 +1,55 @@
+{% comment %} sections/testimonials.liquid {% endcomment %}
+
+<section class="section" id="testimonials">
+  <div class="reveal">
+    <div class="section-label">{{ section.settings.label }}</div>
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    {% for block in section.blocks %}
+      <div class="testi-card reveal reveal--d{{ forloop.index }}" {{ block.shopify_attributes }}>
+        <div class="testi-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">{{ block.settings.text }}</p>
+        <div class="testi-author">
+          <div class="testi-avatar">{{ block.settings.name | slice: 0 }}</div>
+          <div>
+            <div class="testi-name">{{ block.settings.name }}</div>
+            <div class="testi-location">{{ block.settings.location }}</div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Témoignages",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Avis Clients" },
+    { "type": "text", "id": "title", "label": "Titre",  "default": "Ce qu'elles <em>Disent</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Témoignage",
+      "settings": [
+        { "type": "textarea", "id": "text",     "label": "Texte", "default": "Un sac absolument magnifique. La qualité est exceptionnelle et le design est intemporel." },
+        { "type": "text",     "id": "name",     "label": "Nom",   "default": "Sara El Amrani" },
+        { "type": "text",     "id": "location", "label": "Ville", "default": "Cliente VIP · Casablanca" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Témoignages",
+    "blocks": [
+      { "type": "testimonial", "settings": { "name": "Sara El Amrani",  "location": "Cliente VIP · Casablanca",  "text": "Un sac absolument magnifique. La qualité du cuir est exceptionnelle et le design est intemporel. Je reçois des compliments à chaque fois." } },
+      { "type": "testimonial", "settings": { "name": "Leila Benali",    "location": "Cliente Fidèle · Rabat",    "text": "SACJOUZIF c'est vraiment la référence. La livraison était rapide et le packaging était soigné. Je recommande vivement !" } },
+      { "type": "testimonial", "settings": { "name": "Nadia Cherkaoui", "location": "Influenceuse · Marrakech", "text": "Le sac camel est mon coup de cœur absolu. La finition est parfaite et les détails dorés sont sublimes. Un vrai bijou !" } }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,38 @@
+{% comment %} snippets/product-card-placeholder.liquid {% endcomment %}
+
+{% assign bg_classes = 'bag-art-1,bag-art-2,bag-art-3,bag-art-4,bag-art-5' | split: ',' %}
+{% assign bg_class = bg_classes[index | minus: 1 | modulo: 5] %}
+
+<div class="product-card">
+  {% if index == 1 %}
+    <div class="product-badge">Bestseller</div>
+  {% elsif index == 3 %}
+    <div class="product-badge">Nouveau</div>
+  {% endif %}
+
+  <div class="product-media">
+    <div class="product-placeholder {{ bg_class }}">
+      <svg style="width:45%;height:45%;opacity:0.3;" viewBox="0 0 160 200" fill="none">
+        <path d="M45 65C45 48 62 35 80 35C98 35 115 48 115 65" stroke="rgba(250,246,240,0.7)" stroke-width="3" fill="none"/>
+        <rect x="20" y="65" width="120" height="110" rx="6" stroke="rgba(250,246,240,0.7)" stroke-width="3" fill="none"/>
+        <circle cx="80" cy="125" r="7" stroke="rgba(201,169,110,0.9)" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="product-overlay">
+      <button class="product-atc">Ajouter au Panier</button>
+    </div>
+  </div>
+
+  <div class="product-body">
+    <a href="#" class="product-title">{{ 'products.product.onboarding_title' | t | default: 'Sac Luxe' }}</a>
+    <div class="product-price">{{ 1990 | times: 100 | money }}</div>
+  </div>
+</div>
+
+<style>
+.bag-art-1{background:linear-gradient(145deg,#C8A882,#A07850)}
+.bag-art-2{background:linear-gradient(145deg,#2A2018,#1A1208)}
+.bag-art-3{background:linear-gradient(145deg,#E8D5B8,#C8A882)}
+.bag-art-4{background:linear-gradient(145deg,#8B6B4A,#6B4B2A)}
+.bag-art-5{background:linear-gradient(145deg,#1A1208,#3D2B1F)}
+</style>

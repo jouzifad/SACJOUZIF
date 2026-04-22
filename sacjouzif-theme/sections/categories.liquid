@@ -1,0 +1,62 @@
+{% comment %} sections/categories.liquid {% endcomment %}
+
+<section class="section" id="categories" style="background:var(--cream);">
+  <div class="reveal">
+    <div class="section-label">{{ section.settings.label }}</div>
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+  </div>
+
+  <div class="cat-grid">
+    {% for block in section.blocks %}
+      <div class="cat-card" {{ block.shopify_attributes }}>
+        <div class="cat-bg" style="
+          {% if block.settings.image %}
+            background-image: url('{{ block.settings.image | img_url: '800x800', crop: 'center' }}');
+          {% else %}
+            background: {{ block.settings.fallback_color | default: '#8B6B4A' }};
+          {% endif %}
+          background-size: cover; background-position: center;">
+        </div>
+        <div class="cat-overlay"></div>
+        <a href="{{ block.settings.url | default: '/collections/all' }}" class="cat-info" style="text-decoration:none;">
+          <h3>{{ block.settings.title }}</h3>
+          <span>{{ block.settings.cta | default: 'Voir tout' }} ↗</span>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catégories",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Explorer" },
+    { "type": "text", "id": "title", "label": "Titre",  "default": "Nos <em>Catégories</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Catégorie",
+      "settings": [
+        { "type": "text",        "id": "title",          "label": "Nom",              "default": "Sacs à Main" },
+        { "type": "text",        "id": "cta",            "label": "Texte du lien",    "default": "Voir tout" },
+        { "type": "url",         "id": "url",            "label": "Lien" },
+        { "type": "image_picker","id": "image",          "label": "Image" },
+        { "type": "color",       "id": "fallback_color", "label": "Couleur si pas d'image", "default": "#8B6B4A" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [{
+    "name": "Catégories",
+    "blocks": [
+      { "type": "category", "settings": { "title": "Sacs à Main",    "fallback_color": "#8B6B4A" } },
+      { "type": "category", "settings": { "title": "Mini Bags",      "fallback_color": "#2A2018" } },
+      { "type": "category", "settings": { "title": "Tote Bags",      "fallback_color": "#C8A882" } },
+      { "type": "category", "settings": { "title": "Clutch Soirée",  "fallback_color": "#4A3828" } },
+      { "type": "category", "settings": { "title": "Accessoires",    "fallback_color": "#D4B896" } }
+    ]
+  }]
+}
+{% endschema %}

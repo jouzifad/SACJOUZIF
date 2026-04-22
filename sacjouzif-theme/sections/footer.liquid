@@ -1,0 +1,70 @@
+{% comment %} sections/footer.liquid {% endcomment %}
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <a href="{{ routes.root_url }}" class="footer-logo">
+        {{ shop.name | upcase }}
+      </a>
+      <p class="footer-desc">{{ section.settings.description }}</p>
+      <div class="footer-socials">
+        {% if section.settings.instagram != blank %}
+          <a href="{{ section.settings.instagram }}" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">ig</a>
+        {% endif %}
+        {% if section.settings.facebook != blank %}
+          <a href="{{ section.settings.facebook }}" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">fb</a>
+        {% endif %}
+        {% if section.settings.tiktok != blank %}
+          <a href="{{ section.settings.tiktok }}" class="social-icon" aria-label="TikTok" target="_blank" rel="noopener">tk</a>
+        {% endif %}
+        {% if section.settings.whatsapp != blank %}
+          <a href="https://wa.me/{{ section.settings.whatsapp }}" class="social-icon" aria-label="WhatsApp" target="_blank" rel="noopener">wa</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% for block in section.blocks %}
+      <div class="footer-col" {{ block.shopify_attributes }}>
+        <h4>{{ block.settings.title }}</h4>
+        <ul>
+          {% assign links = block.settings.links %}
+          {% if links != blank %}
+            {% for link in linklists[links].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}. <span>Tous droits réservés.</span></p>
+    <p>{{ section.settings.tagline }}</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Maroquinerie de luxe pour la femme moderne. Des créations uniques alliant tradition et contemporanéité." },
+    { "type": "text",     "id": "tagline",     "label": "Tagline bas",  "default": "Maroquinerie de Luxe Féminine" },
+    { "type": "text",     "id": "instagram",   "label": "Instagram URL" },
+    { "type": "text",     "id": "facebook",    "label": "Facebook URL" },
+    { "type": "text",     "id": "tiktok",      "label": "TikTok URL" },
+    { "type": "text",     "id": "whatsapp",    "label": "WhatsApp (numéro sans +)" }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Colonne de liens",
+      "settings": [
+        { "type": "text",      "id": "title", "label": "Titre colonne" },
+        { "type": "link_list", "id": "links", "label": "Menu de liens" }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}
